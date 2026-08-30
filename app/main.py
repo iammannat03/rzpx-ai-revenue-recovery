@@ -1,0 +1,3 @@
+"""
+FastAPI app entrypoint
+"""

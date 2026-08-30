@@ -1,0 +1,3 @@
+"""
+abstract Classifier base class
+"""

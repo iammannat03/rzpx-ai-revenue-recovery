@@ -1,0 +1,3 @@
+"""
+OPA client wrapper
+"""

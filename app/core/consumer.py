@@ -1,0 +1,3 @@
+"""
+abstract Consumer base class
+"""
