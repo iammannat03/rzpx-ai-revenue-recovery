@@ -11,7 +11,11 @@ SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 
 def init_db() -> None:
-    """Create all tables. Call this once at startup / in a migration script."""
+    """Create all tables. Call this once at startup / in a migration script.
+
+    Dev convenience only — Alembic (`app/db/migrations/`, `uv run alembic
+    upgrade head`) is now the source of truth for schema creation/changes.
+    """
     Base.metadata.create_all(bind=engine)
 
 
