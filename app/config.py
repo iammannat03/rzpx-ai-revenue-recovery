@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     opa_url: str
 
     ollama_base_url: str = "http://localhost:11434"
-    ollama_model: str = "qwen2.5:7b"
+    ollama_model: str = "qwen2.5:3b"
 
 
 @lru_cache

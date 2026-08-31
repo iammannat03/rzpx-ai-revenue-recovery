@@ -33,6 +33,23 @@ services:
       - "8181:8181"
     volumes:
       - ./policies:/policies
+    healthcheck:
+      # The opa image ships no shell/curl/wget, so the healthcheck uses the opa
+      # binary itself: http.send() hits OPA's own /health endpoint, and --fail
+      # makes `opa eval` exit non-zero on an undefined/error result.
+      test:
+        [
+          "CMD",
+          "/opa",
+          "eval",
+          "--fail",
+          "-f",
+          "pretty",
+          "http.send({\"method\": \"get\", \"url\": \"http://localhost:8181/health\", \"timeout\": \"2s\"}).status_code",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   ollama:
     image: ollama/ollama:latest
@@ -40,6 +57,18 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
 
 volumes:
   pgdata:
